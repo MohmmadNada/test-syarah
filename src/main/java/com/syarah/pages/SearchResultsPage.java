@@ -1,56 +1,41 @@
 package com.syarah.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class SearchResultsPage extends BasePage {
+    /* Locators */
+    private final By YEAR_OF_MANUFACTURE_OPTION = By.xpath("//div[strong[text()=\"سنة الصنع\"]]");
+    private final By FROM_YEAR_INPUT = By.xpath("//span[@class='Input-module__label' and text()='من']/preceding-sibling::input");
+    private final By TO_YEAR_INPUT = By.xpath("//span[@class='Input-module__label' and text()='الى']/preceding-sibling::input");
+    private final By DONE_BUTTON = By.xpath("//button[@class=\"SubMenuContainer-module__DoneBtn\"]");
+    private final By APPLIED_FILTER_TAGS = By.xpath("//div[@class=\"AsideTags-module__mobWrapper\"]/span[not(contains(@class, \"reset\"))]");
+    private final By CARD_TITLE = By.xpath("//div[@class=\"UnbxdCards-module__allCarsResult\"]//div/h2");
 
-    /* Selectors */
-    String selectedTag = "//button[@class='Tag-module__tag']";
     public SearchResultsPage(WebDriver driver) {
         super(driver);
     }
     /* Actions */
     public void selectYearRange(int fromYear, int toYear) {
-        // 1. Click 'سنة الصنع' (Year of Manufacture) filter from filter sidebar
-        WebElement yearFilter = driver.findElement(By.xpath("//div[strong[text()=\"سنة الصنع\"]]"));
-        yearFilter.click();
+        // 1. Click 'سنة الصنع' (Year of Manufacture) filter from filter sidebar;
+        this.click(YEAR_OF_MANUFACTURE_OPTION);
+
         // 2. Fill "من" input
-        WebElement fromInput = driver.findElement(By.xpath("//span[@class='Input-module__label' and text()='من']/preceding-sibling::input"));
-        fromInput.click();
-        fromInput.sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
-        fromInput.sendKeys(String.valueOf(fromYear));
+        this.clearAndType(FROM_YEAR_INPUT, fromYear);
 
         // 3. Fill "إلى" (to) input
-        WebElement toInput = driver.findElement(By.xpath("//span[@class='Input-module__label' and text()='الى']/preceding-sibling::input"));
-        toInput.click();
-        toInput.sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
-        toInput.sendKeys(String.valueOf(toYear));
+        this.clearAndType(TO_YEAR_INPUT, toYear);
+
         // 4. Click on Done button (adjust selector if needed)
-        WebElement doneButton = driver.findElement(By.xpath("//button[@class=\"SubMenuContainer-module__DoneBtn\"]"));
-        doneButton.click();
+        this.click(DONE_BUTTON);
     }
 
     /* Getters */
-    public int getSelectedBrandTagsCount() throws InterruptedException {
-//        this.waitVisibility(selectedTag);
-        Thread.sleep(5_000);
-        List<WebElement> tags = driver.findElements(By.xpath(selectedTag));
-        return tags.size();
-    }
-
-    public String getSelectedBrandTagText() {
-        WebElement tag = driver.findElement(By.xpath(selectedTag));
-        return tag.getText();
-    }
-
     public List<String> getVisibleFilterTagTexts() {
-        List<WebElement> filterTags = driver.findElements(By.xpath("//div[@class=\"AsideTags-module__mobWrapper\"]/span[not(contains(@class, \"reset\"))]"));
+        List<WebElement> filterTags = this.findAll(APPLIED_FILTER_TAGS);
         return filterTags.stream()
                 .filter(WebElement::isDisplayed)
                 .map(e -> e.getText().trim())
@@ -58,7 +43,7 @@ public class SearchResultsPage extends BasePage {
     }
 
     public List<String> getCarListTitles() {
-        List<WebElement> carTitles = driver.findElements(By.xpath("//div[@class=\"UnbxdCards-module__allCarsResult\"]//div/h2"));
+        List<WebElement> carTitles = this.findAll(CARD_TITLE);
 
         return carTitles.stream()
                 .filter(WebElement::isDisplayed)

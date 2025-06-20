@@ -15,7 +15,6 @@ import java.util.List;
 public class CarSearchTest {
     private WebDriver driver;
     private HomePage homePage;
-
     @BeforeClass
     public void setUp() {
         WebDriverManager.chromedriver().setup();
@@ -26,24 +25,27 @@ public class CarSearchTest {
 
     @Test
     public void testToyotaCarSearchByYear() throws InterruptedException {
+        final int FROM_YEAR = 2022;
+        final int TO_YEAR = 2025;
+        final String TOYOTA_BRAND = "تويوتا";
+        String expectedYearTag = FROM_YEAR + " - " + TO_YEAR;
+
+        // 1. Navigate to the Home Page
         homePage.visit();
+        // 2. Select "Toyota" brand
         homePage.selectToyotaBrand();
+        // 3. On the Search Results Page, select the year range 2022 - 2025
         SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
-        int tagCount = searchResultsPage.getSelectedBrandTagsCount();
-        Assert.assertEquals(tagCount, 1, "Expected 1 brand tag to be shown");
-        String tagText = searchResultsPage.getSelectedBrandTagText();
-        Assert.assertEquals(tagText, "تويوتا", "Brand tag text does not match expected value");
-        searchResultsPage.selectYearRange(2022, 2025);
-        // Validate Filters
-        Thread.sleep(5_000); // TODO: Make it dynamic - Wait length more than Zero
+        searchResultsPage.selectYearRange(FROM_YEAR, TO_YEAR);
+        // 4. Wait until at least one filter tag is visible
         List<String> appliedFilters = searchResultsPage.getVisibleFilterTagTexts();
-        System.out.println("Filters applied are: " + appliedFilters);// TODO: To Remove
-        Assert.assertTrue(appliedFilters.contains("تويوتا"), "Brand tag not found");
-        Assert.assertTrue(appliedFilters.contains("2022 - 2025"), "Year range tag not found");
-        // Validate Search result - Car Cards
+        // 5. Validate that the applied filter tags include the brand and year range
+        Assert.assertTrue(appliedFilters.contains(TOYOTA_BRAND), "Expected brand filter tag '" + TOYOTA_BRAND + "' not found among applied filters: " + appliedFilters);
+        Assert.assertTrue(appliedFilters.contains(expectedYearTag), "Expected year range filter tag '" + expectedYearTag + "' not found among applied filters: " + appliedFilters);
+        // 6. Validate that all car cards in the results contain 'تويوتا' in their title
         List<String> carTitles = searchResultsPage.getCarListTitles();
         for (String title : carTitles) {
-            Assert.assertTrue(title.contains("تويوتا"), "Car title does not contain 'تويوتا': " + title);
+            Assert.assertTrue(title.contains(TOYOTA_BRAND), "Car title does not contain '" + TOYOTA_BRAND + "': " + title + ". All titles: " + carTitles);
         }
     }
 

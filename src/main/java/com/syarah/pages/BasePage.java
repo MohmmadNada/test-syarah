@@ -1,18 +1,15 @@
 package com.syarah.pages;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.By;
 import java.time.Duration;
 import java.util.List;
-import org.openqa.selenium.JavascriptExecutor;
 
 public abstract class BasePage {
     protected WebDriver driver;
     protected WebDriverWait wait;
-    protected static final String BASE_URL = "https://preprod.syarah.com/";
+    protected static final String BASE_URL = "https://preprod.syarah.com";
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -44,40 +41,24 @@ public abstract class BasePage {
         ((JavascriptExecutor) driver).executeScript(
                 "arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});", element);
     }
-    /* TODO
+
     protected List<WebElement> findAll(By locator) {
-        return driver.findElements(locator);
+        return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
     }
 
     // Click using a By locator
     protected void click(By locator) {
         wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
-    } */
+    }
 
     // Click using a WebElement
     protected void click(WebElement element) {
         wait.until(ExpectedConditions.elementToBeClickable(element)).click();
     }
-    /* TODO
-    protected void type(By locator, String text) {
+
+    protected void clearAndType(By locator, Object text) {
         WebElement element = find(locator);
-        element.clear();
-        element.sendKeys(text);
+        element.sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
+        element.sendKeys(String.valueOf(text));
     }
-
-    protected String getText(By locator) {
-        return find(locator).getText();
-    }
-
-    protected boolean isDisplayed(By locator) {
-        try {
-            return find(locator).isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    protected void waitVisibility(By locator) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-    }*/
 }

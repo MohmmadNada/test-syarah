@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 
 public class HomePage extends BasePage {
     /* Locators */
-    private static final By TOYOTA_BRAND_OPTION = By.xpath("//a[starts-with(@href, '/autos/toyota')]"); // TODO: Make dynamic
+    private static final By TOYOTA_BRAND_OPTION = By.xpath("//a[starts-with(@href, '/autos/toyota')]");
 
     public HomePage(WebDriver driver) {
         super(driver);
