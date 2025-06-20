@@ -26,7 +26,7 @@ public class CarSearchTest {
 
     @Test
     public void testToyotaCarSearchByYear() throws InterruptedException {
-        driver.get("https://preprod.syarah.com/");
+        homePage.visit();
         homePage.selectToyotaBrand();
         SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
         int tagCount = searchResultsPage.getSelectedBrandTagsCount();

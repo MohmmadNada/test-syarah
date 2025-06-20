@@ -16,7 +16,7 @@ public class SearchResultsPage extends BasePage {
         super(driver);
     }
     /* Actions */
-    public void selectYearRange(int fromYear, int toYear) throws InterruptedException {
+    public void selectYearRange(int fromYear, int toYear) {
         // 1. Click 'سنة الصنع' (Year of Manufacture) filter from filter sidebar
         WebElement yearFilter = driver.findElement(By.xpath("//div[strong[text()=\"سنة الصنع\"]]"));
         yearFilter.click();
@@ -37,8 +37,9 @@ public class SearchResultsPage extends BasePage {
     }
 
     /* Getters */
-    public int getSelectedBrandTagsCount() {
-        this.waitVisibility(selectedTag);
+    public int getSelectedBrandTagsCount() throws InterruptedException {
+//        this.waitVisibility(selectedTag);
+        Thread.sleep(5_000);
         List<WebElement> tags = driver.findElements(By.xpath(selectedTag));
         return tags.size();
     }
