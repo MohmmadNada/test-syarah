@@ -1,4 +1,4 @@
-package com.syarah.pages;
+package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -14,6 +14,12 @@ public class SearchResultsPage extends BasePage {
     private final By DONE_BUTTON = By.xpath("//button[@class=\"SubMenuContainer-module__DoneBtn\"]");
     private final By APPLIED_FILTER_TAGS = By.xpath("//div[@class=\"AsideTags-module__mobWrapper\"]/span[not(contains(@class, \"reset\"))]");
     private final By CARD_TITLE = By.xpath("//div[@class=\"UnbxdCards-module__allCarsResult\"]//div/h2");
+    private final By FILTER_SECTION = By.id("AsideHeightOne");
+
+    /* Selector Sections */
+    public WebElement getFilterSection() {
+        return this.find(FILTER_SECTION);
+    }
 
     public SearchResultsPage(WebDriver driver) {
         super(driver);
@@ -59,4 +65,5 @@ public class SearchResultsPage extends BasePage {
             }
         }
     }
+
 }

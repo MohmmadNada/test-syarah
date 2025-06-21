@@ -1,7 +1,7 @@
 package com.syarah.tests;
 
-import com.syarah.pages.HomePage;
-import com.syarah.pages.SearchResultsPage;
+import pages.HomePage;
+import pages.SearchResultsPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
@@ -28,7 +28,7 @@ public class CarSearchTest {
         final int FROM_YEAR = 2022;
         final int TO_YEAR = 2025;
         final String TOYOTA_BRAND = "تويوتا";
-        String expectedYearTag = FROM_YEAR + " - " + TO_YEAR;
+        final String expectedYearTag = FROM_YEAR + " - " + TO_YEAR;
 
         // 1. Navigate to the Home Page
         homePage.visit();
