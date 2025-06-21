@@ -7,21 +7,26 @@ import io.cucumber.java.AfterStep;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
 import reporting.ExtentReportManager;
 import reporting.ScreenshotUtil;
 import reporting.VideoRecorderUtil;
 
+/**
+ * Cucumber Hooks for browser, reporting, screenshot, and video management.
+ */
 public class Hooks {
-    @Before
+
+    @Before(order=0)
+    public void beforeScenario(Scenario scenario) {
+        ExtentReportManager.createTest(scenario.getName());
+    }
+
+    @Before(order=1)
     public void setUp(Scenario scenario) throws Exception {
         WebDriver driver = DriverFactory.getDriver();
         driver.manage().window().maximize();
         VideoRecorderUtil.startRecording(scenario.getName());
-    }
-
-    @Before
-    public void beforeScenario(Scenario scenario) {
-        ExtentReportManager.createTest(scenario.getName());
     }
 
     @AfterStep
@@ -36,13 +41,13 @@ public class Hooks {
         }
     }
 
-    @After
+    @After(order = 1)
     public void tearDown() {
 
         DriverFactory.quitDriver();
     }
 
-    @After
+    @After(order = 2)
     public void afterScenario() throws Exception {
         String videoPath = VideoRecorderUtil.stopRecording();
         if (videoPath != null) {
@@ -51,7 +56,6 @@ public class Hooks {
                     "<a href='" + videoPath + "' target='_blank'>Watch Video</a>"
             );
         }
-        ExtentReportManager.unload();
-        ExtentReportManager.getExtentReports().flush();
     }
+
 }
