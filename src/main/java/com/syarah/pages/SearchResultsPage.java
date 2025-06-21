@@ -42,12 +42,21 @@ public class SearchResultsPage extends BasePage {
                 .collect(Collectors.toList());
     }
 
-    public List<String> getCarListTitles() {
+    private List<String> getCarListTitles() {
         List<WebElement> carTitles = this.findAll(CARD_TITLE);
 
         return carTitles.stream()
                 .filter(WebElement::isDisplayed)
                 .map(e -> e.getText().trim())
                 .collect(Collectors.toList());
+    }
+
+    public void assertAllCarTitlesContainBrand(String brand) {
+        List<String> carTitles = this.getCarListTitles();
+        for (String title : carTitles) {
+            if (!title.contains(brand)) {
+                throw new AssertionError("Car title does not contain '" + brand + "': " + title + ". All titles: " + carTitles);
+            }
+        }
     }
 }

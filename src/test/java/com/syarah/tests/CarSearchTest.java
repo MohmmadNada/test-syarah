@@ -43,10 +43,7 @@ public class CarSearchTest {
         Assert.assertTrue(appliedFilters.contains(TOYOTA_BRAND), "Expected brand filter tag '" + TOYOTA_BRAND + "' not found among applied filters: " + appliedFilters);
         Assert.assertTrue(appliedFilters.contains(expectedYearTag), "Expected year range filter tag '" + expectedYearTag + "' not found among applied filters: " + appliedFilters);
         // 6. Validate that all car cards in the results contain 'تويوتا' in their title
-        List<String> carTitles = searchResultsPage.getCarListTitles();
-        for (String title : carTitles) {
-            Assert.assertTrue(title.contains(TOYOTA_BRAND), "Car title does not contain '" + TOYOTA_BRAND + "': " + title + ". All titles: " + carTitles);
-        }
+        searchResultsPage.assertAllCarTitlesContainBrand(TOYOTA_BRAND);
     }
 
     @AfterClass
