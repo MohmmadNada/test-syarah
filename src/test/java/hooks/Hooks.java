@@ -7,7 +7,7 @@ import io.cucumber.java.AfterStep;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterClass;
+import org.openqa.selenium.chrome.ChromeDriver;
 import reporting.ExtentReportManager;
 import reporting.ScreenshotUtil;
 import reporting.VideoRecorderUtil;
@@ -24,7 +24,8 @@ public class Hooks {
 
     @Before(order=1)
     public void setUp(Scenario scenario) throws Exception {
-        WebDriver driver = DriverFactory.getDriver();
+        WebDriver driver = new ChromeDriver();
+        DriverFactory.setDriver(driver);
         driver.manage().window().maximize();
         VideoRecorderUtil.startRecording(scenario.getName());
     }
