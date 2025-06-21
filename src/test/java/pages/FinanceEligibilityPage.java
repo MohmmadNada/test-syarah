@@ -31,7 +31,6 @@ public class FinanceEligibilityPage extends BasePage {
     /* Actions */
     public void selectOptionByText(String text) {
         By elLocator = getOptionLabelXpath(text);
-        System.out.println(elLocator);
         click(elLocator);
     }
 
