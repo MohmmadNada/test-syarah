@@ -1,5 +1,6 @@
 package stepdefinitions;
 
+import config.DriverFactory;
 import io.cucumber.java.en.*;
 import org.testng.Assert;
 import pages.SearchResultsPage;
@@ -10,7 +11,7 @@ public class AssertionSteps {
 
     @Then("validate that the applied filter tags include the brand {string} and year range {int} to {int}")
     public void validate_filter_tags(String brand, int from, int to) {
-        searchResultsPage = new SearchResultsPage(NavigationSteps.driver);
+        searchResultsPage = new SearchResultsPage(DriverFactory.getDriver());
         final String expectedYearTag = from + " - " + to;
         // Wait until at least one filter tag is visible
         List<String> appliedFilters = searchResultsPage.getVisibleFilterTagTexts();
@@ -22,6 +23,6 @@ public class AssertionSteps {
     @Then("validate that all car cards in the results contain {string} in their title")
     public void validate_car_cards_brand_in_title(String brand) {
         searchResultsPage.assertAllCarTitlesContainBrand(brand);
-        NavigationSteps.driver.quit();
+        DriverFactory.quitDriver();
     }
 }
