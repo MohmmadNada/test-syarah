@@ -16,14 +16,15 @@ public class SearchResultsPage extends BasePage {
     private final By CARD_TITLE = By.xpath("//div[@class=\"UnbxdCards-module__allCarsResult\"]//div/h2");
     private final By FILTER_SECTION = By.id("AsideHeightOne");
 
+    public SearchResultsPage(WebDriver driver) {
+        super(driver);
+    }
+
     /* Selector Sections */
     public WebElement getFilterSection() {
         return this.find(FILTER_SECTION);
     }
 
-    public SearchResultsPage(WebDriver driver) {
-        super(driver);
-    }
     /* Actions */
     public void selectYearRange(int fromYear, int toYear) {
         // 1. Click 'سنة الصنع' (Year of Manufacture) filter from filter sidebar;
