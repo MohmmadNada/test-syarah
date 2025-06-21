@@ -9,13 +9,16 @@ import io.cucumber.java.Scenario;
 import org.openqa.selenium.WebDriver;
 import reporting.ExtentReportManager;
 import reporting.ScreenshotUtil;
+import reporting.VideoRecorderUtil;
 
 public class Hooks {
     @Before
-    public void setUp() {
+    public void setUp(Scenario scenario) throws Exception {
         WebDriver driver = DriverFactory.getDriver();
         driver.manage().window().maximize();
+        VideoRecorderUtil.startRecording(scenario.getName());
     }
+
     @Before
     public void beforeScenario(Scenario scenario) {
         ExtentReportManager.createTest(scenario.getName());
@@ -40,7 +43,14 @@ public class Hooks {
     }
 
     @After
-    public void afterScenario() {
+    public void afterScenario() throws Exception {
+        String videoPath = VideoRecorderUtil.stopRecording();
+        if (videoPath != null) {
+            // Attach as a clickable link in Extent Report
+            ExtentReportManager.getTest().info(
+                    "<a href='" + videoPath + "' target='_blank'>Watch Video</a>"
+            );
+        }
         ExtentReportManager.unload();
         ExtentReportManager.getExtentReports().flush();
     }
