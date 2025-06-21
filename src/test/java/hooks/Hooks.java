@@ -24,9 +24,8 @@ public class Hooks {
     }
 
     @After
-    public void afterScenario(Scenario scenario) {
+    public void afterScenario() {
         ExtentReportManager.unload();
         ExtentReportManager.getExtentReports().flush();
-
     }
 }
