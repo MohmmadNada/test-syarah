@@ -16,9 +16,6 @@
 
 ## 🏗️ Project Structure
 
-<details>
-<summary>Click to expand project structure</summary>
-
 ```
 ├───src
 │   ├───main
@@ -35,7 +32,6 @@
 │       └───resources
 │           └───features
 ```
-</details>
 
 - **config/** – WebDriver & thread-safe driver factory
 - **hooks/** – Test initialization and teardown (Cucumber/TestNG Hooks)
@@ -78,8 +74,8 @@ After execution Run:
 ```sh
 start target\extent-report.html
 ```
-excuation
-#### **Sample Screenshot in Report**
+
+#### **Samples for Report**
 1. Extent Report
 ![ExtentReport Sample 4](screenshots/reportWithExplanation.PNG)
 ![ExtentReport Sample 1](screenshots/report3.PNG)
