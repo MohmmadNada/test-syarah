@@ -74,13 +74,3 @@ After execution Run:
 ```sh
 start target\extent-report.html
 ```
-
-#### **Samples for Report**
-1. Extent Report
-![ExtentReport Sample 4](screenshots/reportWithExplanation.PNG)
-![ExtentReport Sample 1](screenshots/report3.PNG)
-![ExtentReport Sample 2](screenshots/report1.PNG)
-![ExtentReport Sample 3](screenshots/report2.PNG)
-
-2. Cucumber Report
-![Cucumber Report Sample 1](screenshots/cucumberReport.PNG)
